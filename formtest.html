@@ -1,14 +1,65 @@
 <head>
-  <title>formtest</title>
+  <title>Meteor Auto Form Sample App</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+  <h1>Submit your name</h1>
 
-  {{> hello}}
+  {{> formtest}}
 </body>
 
 <template name="hello">
   <button>Click Me</button>
   <p>You've pressed the button {{counter}} times.</p>
+</template>
+
+<template name="formtest">
+  {{> docTable }}
+</template>
+
+
+<template name="docTable">
+  <table class="table table-bordered table-striped table-hover">
+    <tbody>
+      <tr>
+        <td><button type="button" class="btn-link docClear">New Document</button></td>
+        <td></td>
+      </tr>
+      {{#each documents}}
+      <tr>
+        <td><button type="button" class="btn-link docSelect">{{requiredString}}</button></td>
+        <td>
+          {{#autoForm collection='Documents' doc=this type="remove"}}
+          <button type="submit" class="btn btn-primary">Delete</button>
+          {{/autoForm}}
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="horizontalDocForm">
+  {{> quickForm collection="Documents" id="horizontalDocForm" type="insert" template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
+</template>
+
+<template name="datesForm">
+  {{#autoForm collection="Dates" type="insert" id="datesForm1"}}
+  {{> afQuickField name="date" value=today}}
+  <div>
+    <button type="submit" class="btn btn-primary">Insert</button>
+  </div>
+  {{/autoForm}}
+  {{#autoForm collection="Dates" type="insert" id="datesForm2"}}
+  {{> afQuickField name="dateTime" type="datetime"}}
+  <div>
+    <button type="submit" class="btn btn-primary">Insert</button>
+  </div>
+  {{/autoForm}}
+  {{#autoForm collection="Dates" type="insert" id="datesForm3"}}
+  {{> afQuickField name="dateTimeLocal" type="datetime-local" offset="-0100"}}
+  <div>
+    <button type="submit" class="btn btn-primary">Insert</button>
+  </div>
+  {{/autoForm}}
 </template>
